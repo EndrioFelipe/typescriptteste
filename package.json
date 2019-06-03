@@ -1,0 +1,22 @@
+{
+  "name": "typescriptteste",
+  "version": "1.0.0",
+  "description": "testes com typescript",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1", "compile": "tsc"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/EndrioFelipe/typescriptteste.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/EndrioFelipe/typescriptteste/issues"
+  },
+  "homepage": "https://github.com/EndrioFelipe/typescriptteste#readme",
+  "devDependencies": {
+    "typescript": "^2.3.2"
+  }
+}
