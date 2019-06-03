@@ -1,14 +1,11 @@
 class Negociacao {
-    _data;
-    _quantidade;
-    _valor;
+    // private _data: Date;
+    // private _quantidade: number;
+    // private _valor: number; //é preciso especificar em tsconfig pra ignorar o tipo any q é atribuido 
+                            //automaticamente
     
-    constructor(data, quantidade,  valor) {
-
-        this._data = data;
-        this._quantidade = quantidade;
-        this._valor = valor;
-        console.log("sfdfs");
+    constructor(private _data: Date, private _quantidade: number,  private _valor: number) {
+        //não precisa mais fazer o shadowing
     }
 
     get data() {

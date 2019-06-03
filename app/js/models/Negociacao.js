@@ -3,7 +3,6 @@ class Negociacao {
         this._data = data;
         this._quantidade = quantidade;
         this._valor = valor;
-        console.log("sfdfs");
     }
     get data() {
         return this._data;
