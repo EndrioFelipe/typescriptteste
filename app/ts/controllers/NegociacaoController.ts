@@ -2,6 +2,7 @@ class NegociacaoController {
     private _inputData: HTMLInputElement;
     private _inputQuantidade: HTMLInputElement;
     private _inputValor: HTMLInputElement;
+    private _negociacoes = new Negociacoes(); //Não precisa colocar ': Negociacoes' pq o typescript já infere q é do tipo Negociacoes após colocar o new
 
     constructor(){
         // a conversão <HTMLInputElement> é necessária pq ele é um tipo mais específico em relação ao 
@@ -11,7 +12,7 @@ class NegociacaoController {
         this._inputValor = <HTMLInputElement>  document.querySelector("#valor");
     }
 
-    adiciona(event: Event){
+    adiciona(event: Event){ //tem que declarar que é do tipo Event quando '"noImplicitAny": true' em tsconfig, pq se não ele recebe um tipo implícito 'any'
         event.preventDefault();
         //declarar os inputs como element não habilita o .value, pra isso é preciso usar o 
         //HTMLInputElement
@@ -19,5 +20,12 @@ class NegociacaoController {
                                           parseInt(this._inputQuantidade.value),
                                           parseFloat(this._inputValor.value));
         console.log(negociacao);
+
+        this._negociacoes.adiciona(negociacao);
+
+        //feito os testes de integidade do array, o código abaixo torna-se inutilizável
+        // this._negociacoes.paraArray().forEach(negociacao => {
+        //     console.log("data: "+negociacao.data);
+        // });
     }
 }
