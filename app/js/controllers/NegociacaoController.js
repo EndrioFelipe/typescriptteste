@@ -1,11 +1,13 @@
 class NegociacaoController {
     constructor() {
         this._negociacoes = new Negociacoes(); //Não precisa colocar ': Negociacoes' pq o typescript já infere q é do tipo Negociacoes após colocar o new
+        this._negociacoesView = new NegociacoesView('#negociacoesView');
         // a conversão <HTMLInputElement> é necessária pq ele é um tipo mais específico em relação ao 
         //tipo Elemento recebido pelo document.querySelector
         this._inputData = document.querySelector("#data");
         this._inputQuantidade = document.querySelector("#quantidade");
         this._inputValor = document.querySelector("#valor");
+        this._negociacoesView.update(this._negociacoes);
     }
     adiciona(event) {
         event.preventDefault();
@@ -15,6 +17,7 @@ class NegociacaoController {
         parseInt(this._inputQuantidade.value), parseFloat(this._inputValor.value));
         console.log(negociacao);
         this._negociacoes.adiciona(negociacao);
+        this._negociacoesView.update(this._negociacoes); //passa a lisa de negociacoes
         //feito os testes de integidade do array, o código abaixo torna-se inutilizável
         // this._negociacoes.paraArray().forEach(negociacao => {
         //     console.log("data: "+negociacao.data);

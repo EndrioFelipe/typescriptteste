@@ -1,5 +1,11 @@
 class NegociacoesView {
-    template() {
+    constructor(seletor) {
+        this._elemento = document.querySelector(seletor);
+    }
+    update(modelo) {
+        this._elemento.innerHTML = this.template(modelo);
+    }
+    template(modelo) {
         return ` 
         <table class="table table-hover table-bordered">
             <thead>
@@ -12,6 +18,17 @@ class NegociacoesView {
             </thead>
 
             <tbody>
+                ${modelo.paraArray().map(negociacao => {
+            return `
+                            <tr>
+                                <td>${negociacao.data.getDate()}/${negociacao.data.getMonth() + 1}/${negociacao.data.getFullYear()}</td>
+                                <td>${negociacao.quantidade}</td>
+                                <td>${negociacao.valor}</td>
+                                <td>${negociacao.volume}</td>
+                            <tr>
+                        `;
+        }).join('') // tem que botar um espaço em branco dentro do join para que ele não use ',' como separador dentro do array                
+        }
             </tbody>
 
             <tfoot>
