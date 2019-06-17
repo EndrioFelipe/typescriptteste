@@ -2,6 +2,7 @@ class NegociacaoController {
     constructor() {
         this._negociacoes = new Negociacoes(); //Não precisa colocar ': Negociacoes' pq o typescript já infere q é do tipo Negociacoes após colocar o new
         this._negociacoesView = new NegociacoesView('#negociacoesView');
+        this._mensagemView = new MensagemView('#mensagemView');
         // a conversão <HTMLInputElement> é necessária pq ele é um tipo mais específico em relação ao 
         //tipo Elemento recebido pelo document.querySelector
         this._inputData = document.querySelector("#data");
@@ -22,5 +23,6 @@ class NegociacaoController {
         // this._negociacoes.paraArray().forEach(negociacao => {
         //     console.log("data: "+negociacao.data);
         // });
+        this._mensagemView.update('Negociação adicionada com sucesso!');
     }
 }
