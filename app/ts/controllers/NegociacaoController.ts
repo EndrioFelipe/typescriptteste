@@ -1,7 +1,7 @@
 class NegociacaoController {
-    private _inputData: HTMLInputElement;
-    private _inputQuantidade: HTMLInputElement;
-    private _inputValor: HTMLInputElement;
+    private _inputData: JQuery;
+    private _inputQuantidade: JQuery;
+    private _inputValor: JQuery;
     private _negociacoes = new Negociacoes(); //Não precisa colocar ': Negociacoes' pq o typescript já infere q é do tipo Negociacoes após colocar o new
     private _negociacoesView = new NegociacoesView('#negociacoesView');
     private _mensagemView = new MensagemView('#mensagemView');
@@ -9,9 +9,9 @@ class NegociacaoController {
     constructor(){
         // a conversão <HTMLInputElement> é necessária pq ele é um tipo mais específico em relação ao 
         //tipo Elemento recebido pelo document.querySelector
-        this._inputData = <HTMLInputElement> document.querySelector("#data");
-        this._inputQuantidade = <HTMLInputElement>  document.querySelector("#quantidade");
-        this._inputValor = <HTMLInputElement>  document.querySelector("#valor");
+        this._inputData = $("#data");
+        this._inputQuantidade = $("#quantidade");
+        this._inputValor = $("#valor");
         this._negociacoesView.update(this._negociacoes);
     }
 
@@ -19,9 +19,9 @@ class NegociacaoController {
         event.preventDefault();
         //declarar os inputs como element não habilita o .value, pra isso é preciso usar o 
         //HTMLInputElement
-        const negociacao = new Negociacao(new Date(this._inputData.value.replace(/-/g, ',')), //aqui o input recebe no formato String e Date até aceita o formato String, mas ela recebe tipo 2012-05-01 e ela deveria ser 2012,05,01. Então o replace troca os hífens por vírgulas
-                                          parseInt(this._inputQuantidade.value),
-                                          parseFloat(this._inputValor.value));
+        const negociacao = new Negociacao(new Date(this._inputData.val().replace(/-/g, ',')), //aqui o input recebe no formato String e Date até aceita o formato String, mas ela recebe tipo 2012-05-01 e ela deveria ser 2012,05,01. Então o replace troca os hífens por vírgulas
+                                          parseInt(this._inputQuantidade.val()),
+                                          parseFloat(this._inputValor.val()));
         console.log(negociacao);
 
         this._negociacoes.adiciona(negociacao);

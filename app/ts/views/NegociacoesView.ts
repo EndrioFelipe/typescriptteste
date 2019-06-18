@@ -1,7 +1,5 @@
 class NegociacoesView extends View<Negociacoes> {
 
-    
-    
 
     template(modelo: Negociacoes): string {
         
@@ -27,6 +25,7 @@ class NegociacoesView extends View<Negociacoes> {
                             <tr>
                         `
                     }).join('') // tem que botar um espaço em branco dentro do join para que ele não use ',' como separador dentro do array                
+                    //teste
                 }
             </tbody>
 

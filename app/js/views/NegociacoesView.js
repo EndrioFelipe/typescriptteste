@@ -1,10 +1,4 @@
-class NegociacoesView {
-    constructor(seletor) {
-        this._elemento = document.querySelector(seletor);
-    }
-    update(modelo) {
-        this._elemento.innerHTML = this.template(modelo);
-    }
+class NegociacoesView extends View {
     template(modelo) {
         return ` 
         <table class="table table-hover table-bordered">
@@ -27,8 +21,7 @@ class NegociacoesView {
                                 <td>${negociacao.volume}</td>
                             <tr>
                         `;
-        }).join('') // tem que botar um espaço em branco dentro do join para que ele não use ',' como separador dentro do array                
-        }
+        }).join('')}
             </tbody>
 
             <tfoot>
