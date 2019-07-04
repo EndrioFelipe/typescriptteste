@@ -3,6 +3,8 @@ import { MensagemView } from '../views/MensagemView';
 import { Negociacoes } from '../models/Negociacoes';
 import { Negociacao } from '../models/Negociacao';
 
+//procure na aula 01 vídeo 07 caso queira deixar esses imports mais enxutos
+
 export class NegociacaoController {
     private _inputData: JQuery;
     private _inputQuantidade: JQuery;

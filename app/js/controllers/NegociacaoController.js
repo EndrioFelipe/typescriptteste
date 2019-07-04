@@ -1,5 +1,4 @@
-System.register(["../views/NegociacoesView", "../views/MensagemView", "../models/Negociacoes", "../models/Negociacao"], function (exports_1, context_1) { 
-    //Sustem.register... -> estranha estrutura gerada quando vc usa o loader
+System.register(["../views/NegociacoesView", "../views/MensagemView", "../models/Negociacoes", "../models/Negociacao"], function (exports_1, context_1) {
     "use strict";
     var __moduleName = context_1 && context_1.id;
     var NegociacoesView_1, MensagemView_1, Negociacoes_1, Negociacao_1, NegociacaoController;

@@ -41,11 +41,17 @@
     <script src="lib/jquery.min.js"></script>
     <script src="lib/system.js">
         //este é o loader de fato, carregador universal de módulos que irão desencadear o carregamento dos arquivos
+        //É o responsável pelo carregamento do módulo principal da aplicação. A partir desse módulos todas as suas 
+        //dependências são resolvidas dinamicamente, sem a necessidade de termos que importar cada 
+        //script individualmente seguindo uma ordem de importação definida. 
     </script>
     <script>
         //agora é importar o loader utilizá-lo para carregar js/app/js
         System.defaultJSExtensions = true; //omite as extensões na hora dos imports pra não precisar escrever
         System.import('js/app.js').catch(err => console.error(err)); // aqui importa o app.js e a partir dele todas os outros imports são detectados e importando-os na ordem certa
+        //depois de colocar esses dois últimos scpripts, pelo terminal, pare o servidor, vá até /home/inss/git/typescriptteste
+        //e rode o seguinte comando 'npm install lite-server@2.3.0 --save-dev'. É pra corrigir o baulho dos xml q usa AJAX
+        //DẼ uma olhada no package.json que instalou o lite-server
    </script> 
     
 </body>

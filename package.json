@@ -6,7 +6,10 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "compile": "tsc",
-    "start": "tsc -w"
+    "watch": "tsc -w",
+    "server": "lite-server --baseDir=app",
+    "_comment": "'server' é um novo comando que define a pasta app como diretório padrão. Novo comando para iniciar o servidor: 'npm run server', depois digitar localhost:3000 no browser que vai direto pra sua página. Depois disso rode o comando 'npm install concurrently@3.4.0 --save-dev' para podermos rodar o servidor tsc e lite-server juntos no compando npm start. Repare que mudei de start para watch o tsc -w. Um novo start foi feito logo abaixo",
+    "start": "concurrently \"npm run watch\" \"npm run server\""
   },
   "repository": {
     "type": "git",
@@ -20,6 +23,8 @@
   "homepage": "https://github.com/EndrioFelipe/typescriptteste#readme",
   "devDependencies": {
     "@types/jquery": "^2.0.42",
+    "concurrently": "^3.4.0",
+    "lite-server": "^2.3.0",
     "typescript": "^2.3.2"
   }
 }
