@@ -1,4 +1,4 @@
-class Negociacao {
+export class Negociacao {
     // private _data: Date;
     // private _quantidade: number;
     // private _valor: number; //é preciso especificar em tsconfig pra ignorar o tipo any q é atribuido 

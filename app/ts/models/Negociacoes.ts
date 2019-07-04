@@ -1,4 +1,6 @@
-class Negociacoes {
+import { Negociacao } from './Negociacao';
+
+export class Negociacoes {
     private _negociacoes: Array<Negociacao> = [];
 
     adiciona(negociacao: Negociacao): void{ //declarei como void por uma questão de boa práitca colocar tipo nos métodos
