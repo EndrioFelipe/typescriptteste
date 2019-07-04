@@ -3,7 +3,7 @@ class NegociacaoController {
     private _inputQuantidade: JQuery;
     private _inputValor: JQuery;
     private _negociacoes = new Negociacoes(); //Não precisa colocar ': Negociacoes' pq o typescript já infere q é do tipo Negociacoes após colocar o new
-    private _negociacoesView = new NegociacoesView('#negociacoesView');
+    private _negociacoesView = new NegociacoesView('#negociacoesView'); //esse Views na frente é por causa do namespace. Ver classe 'View'.
     private _mensagemView = new MensagemView('#mensagemView');
 
     constructor(){

@@ -1,4 +1,9 @@
-class NegociacoesView extends View<Negociacoes> {
+
+//import View = Views.View; //uma maneira de não ter que ficar escrevendo Views.View na frente de View<Negociacoes>
+import { View } from './View';
+
+
+export class NegociacoesView extends View<Negociacoes> {
 
 
     template(modelo: Negociacoes): string {
@@ -35,3 +40,6 @@ class NegociacoesView extends View<Negociacoes> {
         `;
     }
 }
+
+
+
