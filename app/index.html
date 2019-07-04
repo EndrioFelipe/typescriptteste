@@ -39,6 +39,14 @@
     <div id="negociacoesView"></div>
     
     <script src="lib/jquery.min.js"></script>
+    <script src="lib/system.js">
+        //este é o loader de fato, carregador universal de módulos que irão desencadear o carregamento dos arquivos
+    </script>
+    <script>
+        //agora é importar o loader utilizá-lo para carregar js/app/js
+        System.defaultJSExtensions = true; //omite as extensões na hora dos imports pra não precisar escrever
+        System.import('js/app.js').catch(err => console.error(err)); // aqui importa o app.js e a partir dele todas os outros imports são detectados e importando-os na ordem certa
+   </script> 
     
 </body>
 </html>

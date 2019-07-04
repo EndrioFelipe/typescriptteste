@@ -4,7 +4,8 @@
         "outDir": "app/js",
         "noEmitOnError": true,
         "noImplicitAny": true,
-        "removeComments": true
+        "removeComments": true,
+        "module": "system" //Faz com que o TypeScript use o sistema de módulos do System.js
     },
     "include": [
         "app/ts/**/*"
