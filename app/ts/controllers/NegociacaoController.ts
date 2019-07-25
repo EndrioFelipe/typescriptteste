@@ -10,7 +10,7 @@ export class NegociacaoController {
     private _inputQuantidade: JQuery;
     private _inputValor: JQuery;
     private _negociacoes = new Negociacoes(); //Não precisa colocar ': Negociacoes' pq o typescript já infere q é do tipo Negociacoes após colocar o new
-    private _negociacoesView = new NegociacoesView('#negociacoesView', false); //esse Views na frente é por causa do namespace. Ver classe 'View'.
+    private _negociacoesView = new NegociacoesView('#negociacoesView', true); //esse Views na frente é por causa do namespace. Ver classe 'View'.
     private _mensagemView = new MensagemView('#mensagemView', true); //depois do seletor, o construtor pede outro parâmetro q é o boolean pedind pra informar se vc quer escapar ou não do filtro q impede de adicionar novas tags <script> no template. Coloca-se true pq vc quer escapar.
 
     constructor(){
@@ -26,7 +26,15 @@ export class NegociacaoController {
         event.preventDefault();
         //declarar os inputs como element não habilita o .value, pra isso é preciso usar o 
         //HTMLInputElement
-        const negociacao = new Negociacao(new Date(this._inputData.val().replace(/-/g, ',')), //aqui o input recebe no formato String e Date até aceita o formato String, mas ela recebe tipo 2012-05-01 e ela deveria ser 2012,05,01. Então o replace troca os hífens por vírgulas
+
+        let data = new Date(this._inputData.val().replace(/-/g, ','));
+
+        if(data.getDay() == DiaDaSemana.Domingo || data.getDay() == DiaDaSemana.Sabado){
+            this._mensagemView.update('Somente negociações em dias úteis, por favor!');
+            return 
+        }
+
+        const negociacao = new Negociacao(data, //aqui o input recebe no formato String e Date até aceita o formato String, mas ela recebe tipo 2012-05-01 e ela deveria ser 2012,05,01. Então o replace troca os hífens por vírgulas
                                           parseInt(this._inputQuantidade.val()),
                                           parseFloat(this._inputValor.val()));
         console.log(negociacao);
@@ -42,4 +50,15 @@ export class NegociacaoController {
 
         this._mensagemView.update('Negociação adicionada com sucesso!');
     }
+}
+
+enum DiaDaSemana {
+
+    Domingo, 
+    Segunda, 
+    Terca, 
+    Quarta, 
+    Quinta, 
+    Sexta, 
+    Sabado
 }

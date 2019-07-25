@@ -9,8 +9,14 @@ export class Negociacoes {
 
     paraArray(): Array<Negociacao>{ //um método que retorna o array de negociações
                                     //declarando o tipo no método me garante que a cópia do array q eu criei com o concat vai me devolver um tipo de Array<Negociacao> e não any
-        return [].concat(this._negociacoes);
+        //(original)
+        //return [].concat(this._negociacoes);
         //programação defensiva, pra não colocarem this._negociacoes.paraArray().length = 0; lá no controller e apagar a porra toda
+
+        return ([] as Negociacao[]).concat(this._negociacoes);
+
+        // como temos agora o '"strictNullChecks": true' em tsconfig.json q bloqueia atribuir valores null, do jeito que tava 'return [].concat(this._negociacoes);' o primeiro colchete indica que ele poderia receber um valor null ali dentro. Colocando dessa forma 'return ([] as Negociacao[]).concat(this._negociacoes);' definindo já o array como tipo Negociacao, esse problema é resolvido.
+
     }
 
 

@@ -5,7 +5,8 @@ export abstract class View <T>{ //é preciso trabalhar com tipos genéricos, pq 
     protected _elemento: JQuery;
     private _escapar: boolean;
 
-    constructor(seletor: string, escapar: boolean) {
+    constructor(seletor: string, escapar: boolean = false) { //esse '?' depois de escapar indica q esse parãmetro é opcional. Se vc não passar nada, o valor padrão é undefined, q é o mesmo que false. Então tem q botar true pra escapar. Os parâmetros opcionais devem sempre ficar por último.
+    //antes o parâmetro escapar estava assim 'escapar?: boolean' como opicional, mas mudou p como está agora, pq o 'strictNullChecks': true' no tsconfig.json não deixa mais colocar null ou undefined. Esse 'boolean=false' indica q o valor padrão agora é false.
 
         this._elemento = $(seletor);
         this._escapar = escapar;
