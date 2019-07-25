@@ -10,8 +10,8 @@ export class NegociacaoController {
     private _inputQuantidade: JQuery;
     private _inputValor: JQuery;
     private _negociacoes = new Negociacoes(); //Não precisa colocar ': Negociacoes' pq o typescript já infere q é do tipo Negociacoes após colocar o new
-    private _negociacoesView = new NegociacoesView('#negociacoesView'); //esse Views na frente é por causa do namespace. Ver classe 'View'.
-    private _mensagemView = new MensagemView('#mensagemView');
+    private _negociacoesView = new NegociacoesView('#negociacoesView', false); //esse Views na frente é por causa do namespace. Ver classe 'View'.
+    private _mensagemView = new MensagemView('#mensagemView', true); //depois do seletor, o construtor pede outro parâmetro q é o boolean pedind pra informar se vc quer escapar ou não do filtro q impede de adicionar novas tags <script> no template. Coloca-se true pq vc quer escapar.
 
     constructor(){
         // a conversão <HTMLInputElement> é necessária pq ele é um tipo mais específico em relação ao 
@@ -35,7 +35,7 @@ export class NegociacaoController {
 
         this._negociacoesView.update(this._negociacoes);//passa a lisa de negociacoes
 
-        //feito os testes de integidade do array, o código abaixo torna-se inutilizável
+        //feito os testes de integridade do array, o código abaixo torna-se inutilizável
         // this._negociacoes.paraArray().forEach(negociacao => {
         //     console.log("data: "+negociacao.data);
         // });

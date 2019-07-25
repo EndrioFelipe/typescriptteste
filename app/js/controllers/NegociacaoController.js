@@ -21,8 +21,8 @@ System.register(["../views/NegociacoesView", "../views/MensagemView", "../models
             NegociacaoController = class NegociacaoController {
                 constructor() {
                     this._negociacoes = new Negociacoes_1.Negociacoes();
-                    this._negociacoesView = new NegociacoesView_1.NegociacoesView('#negociacoesView');
-                    this._mensagemView = new MensagemView_1.MensagemView('#mensagemView');
+                    this._negociacoesView = new NegociacoesView_1.NegociacoesView('#negociacoesView', false);
+                    this._mensagemView = new MensagemView_1.MensagemView('#mensagemView', true);
                     this._inputData = $("#data");
                     this._inputQuantidade = $("#quantidade");
                     this._inputValor = $("#valor");
