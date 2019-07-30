@@ -23,9 +23,6 @@ System.register(["../views/NegociacoesView", "../views/MensagemView", "../models
                     this._negociacoes = new Negociacoes_1.Negociacoes();
                     this._negociacoesView = new NegociacoesView_1.NegociacoesView('#negociacoesView', true);
                     this._mensagemView = new MensagemView_1.MensagemView('#mensagemView', true);
-                    this._inputData = $("#data");
-                    this._inputQuantidade = $("#quantidade");
-                    this._inputValor = $("#valor");
                     this._negociacoesView.update(this._negociacoes);
                 }
                 adiciona(event) {

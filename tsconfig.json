@@ -6,8 +6,9 @@
         "noImplicitAny": true,
         "removeComments": true,        
         "module": "system" ,       
-        "strictNullChecks": true
-        // "'module': 'system' --> Faz com que o TypeScript use o sistema de módulos do System.js / 'strictNullChecks: true' --> não deixa atribuir null ou undefined pra nenhuma avriável, a não ser q ela tenha sido declarada com null. "
+        "strictNullChecks": true,
+        "experimentalDecorators": true
+        // "'module': 'system' --> Faz com que o TypeScript use o sistema de módulos do System.js / 'strictNullChecks: true' --> não deixa atribuir null ou undefined pra nenhuma avriável, a não ser q ela tenha sido declarada com null. / 'experimentalDecorators': true --> habilita o uso de decorators como o 'logarTempoDeExecucao()' q é um método q intercepta outros métodos antes deles serem chamados ao serem colocados em cima desses métodos a serem interceptados / "
 
     },
     "include": [
