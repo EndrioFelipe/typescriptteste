@@ -47,6 +47,9 @@ System.register(["../views/NegociacoesView", "../views/MensagemView", "../models
                     this._negociacoesView.update(this._negociacoes);
                     this._mensagemView.update('Negociação adicionada com sucesso!');
                 }
+                importaDados() {
+                    alert('oi');
+                }
             };
             __decorate([
                 domInject_1.domInject("#data")
