@@ -5,6 +5,7 @@ import { Negociacao } from '../models/Negociacao';
 import { NegociacaoParcial } from '../models/NegociacaoParcial';
 import { domInject } from '../helpers/decorators/domInject'
 import { throttle } from '../helpers/decorators/throttle'
+import { NegociacaoService } from '../services/NegociacaoService'
 
 //procure na aula 01 vídeo 07 caso queira deixar esses imports mais enxutos
 
@@ -18,6 +19,7 @@ export class NegociacaoController {
     private _negociacoes = new Negociacoes(); //Não precisa colocar ': Negociacoes' pq o typescript já infere q é do tipo Negociacoes após colocar o new
     private _negociacoesView = new NegociacoesView('#negociacoesView', true); //esse Views na frente é por causa do namespace. Ver classe 'View'.
     private _mensagemView = new MensagemView('#mensagemView', true); //depois do seletor, o construtor pede outro parâmetro q é o boolean pedind pra informar se vc quer escapar ou não do filtro q impede de adicionar novas tags <script> no template. Coloca-se true pq vc quer escapar.
+    private _service = new NegociacaoService();
 
     constructor(){
         // a conversão <HTMLInputElement> é necessária pq ele é um tipo mais específico em relação ao 
@@ -46,9 +48,11 @@ export class NegociacaoController {
         const negociacao = new Negociacao(data, //aqui o input recebe no formato String e Date até aceita o formato String, mas ela recebe tipo 2012-05-01 e ela deveria ser 2012,05,01. Então o replace troca os hífens por vírgulas
                                           parseInt(this._inputQuantidade.val()),
                                           parseFloat(this._inputValor.val()));
-        console.log(negociacao);
+        negociacao.paraTexto();
 
         this._negociacoes.adiciona(negociacao);
+
+        this._negociacoes.paraTexto();
 
         this._negociacoesView.update(this._negociacoes);//passa a lisa de negociacoes
 
@@ -72,15 +76,27 @@ export class NegociacaoController {
                 throw new Error(res.statusText); //esse statusText é um método do tipo response / devolve o status code
             }
         }
-        fetch('http://localhost:8080/dados').then(res => isOK(res))
-        .then(res => res.json())
-        .then((dados: NegociacaoParcial[]) => {  //como o javascript não sabe qual é o tipo de dado q ta vindo, então ele coloca como 'any', dai é preciso declarar (dados: any[]), então vc passa para Negocicacao os dados correspondentes, vezes para quantidade e volume para valor. / no capíyulo posterior mudamos de 'any' para 'NegociacaoParcial', q é uma interface que q vai levar os métodos vezes e montante, pq nada impede q vc colocque dado.veze, sem o 's', e apareça undefined lá na view
-            dados
-                .map(dado => new Negociacao(new Date(), dado.vezes, dado.montante)) //se vc está fazendo o um map de uma variável do tipo any para uma do tipo Negociacao, logo o javascript já sabe q no for each o negociacao vai ser do tipo Negociacao
-                .forEach(negociacao => this._negociacoes.adiciona(negociacao));
+
+        this
+            ._service.obterNegociacoes((isOK))
+            .then(negociacoes => {
+                negociacoes.forEach(negociacao =>  
+                    this._negociacoes.adiciona(negociacao));
                 this._negociacoesView.update(this._negociacoes);
-            })
-        .catch(err => console.log(err.message)); //pega os erros
+            });
+
+        
+
+        //------->>>>Ops! Esse 'fetch' abaixo foi transportado para NegociacaoService, pq caso a gente queira fazer a mesma coisa em outros métodos, ficará mais fácil se passarmos esse 'fetch' para 'NegociacaoService'.
+        // fetch('http://localhost:8080/dados').then(res => isOK(res))
+        // .then(res => res.json())
+        // .then((dados: NegociacaoParcial[]) => {  //como o javascript não sabe qual é o tipo de dado q ta vindo, então ele coloca como 'any', dai é preciso declarar (dados: any[]), então vc passa para Negocicacao os dados correspondentes, vezes para quantidade e volume para valor. / no capíyulo posterior mudamos de 'any' para 'NegociacaoParcial', q é uma interface que q vai levar os métodos vezes e montante, pq nada impede q vc colocque dado.veze, sem o 's', e apareça undefined lá na view
+        //     dados
+        //         .map(dado => new Negociacao(new Date(), dado.vezes, dado.montante)) //se vc está fazendo o um map de uma variável do tipo any para uma do tipo Negociacao, logo o javascript já sabe q no for each o negociacao vai ser do tipo Negociacao
+        //         .forEach(negociacao => this._negociacoes.adiciona(negociacao));
+        //         this._negociacoesView.update(this._negociacoes);
+        //     })
+        // .catch(err => console.log(err.message)); //pega os erros
         //Através da chamada da função then temos acesso à resposta que precisa ser convertida (parse) adequadamente e a Fetch API já traz na própria resposta o método .json() 
         //.json() realiza essa conversão de JSON para objetos em JavaScript. 
         //Como usamos arrow function sem bloco, o resultado da instrução res.json() é retornado automaticamente sem a necessidade de usarmos um return e quando fazemos isso, temos acesso ao retorno na próxima chamada encadeada à função then.

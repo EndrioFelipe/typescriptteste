@@ -1,4 +1,4 @@
-System.register(["../views/NegociacoesView", "../views/MensagemView", "../models/Negociacoes", "../models/Negociacao", "../helpers/decorators/domInject", "../helpers/decorators/throttle"], function (exports_1, context_1) {
+System.register(["../views/NegociacoesView", "../views/MensagemView", "../models/Negociacoes", "../models/Negociacao", "../helpers/decorators/domInject", "../helpers/decorators/throttle", "../services/NegociacaoService"], function (exports_1, context_1) {
     "use strict";
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
         var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -7,7 +7,7 @@ System.register(["../views/NegociacoesView", "../views/MensagemView", "../models
         return c > 3 && r && Object.defineProperty(target, key, r), r;
     };
     var __moduleName = context_1 && context_1.id;
-    var NegociacoesView_1, MensagemView_1, Negociacoes_1, Negociacao_1, domInject_1, throttle_1, NegociacaoController, DiaDaSemana;
+    var NegociacoesView_1, MensagemView_1, Negociacoes_1, Negociacao_1, domInject_1, throttle_1, NegociacaoService_1, NegociacaoController, DiaDaSemana;
     return {
         setters: [
             function (NegociacoesView_1_1) {
@@ -27,6 +27,9 @@ System.register(["../views/NegociacoesView", "../views/MensagemView", "../models
             },
             function (throttle_1_1) {
                 throttle_1 = throttle_1_1;
+            },
+            function (NegociacaoService_1_1) {
+                NegociacaoService_1 = NegociacaoService_1_1;
             }
         ],
         execute: function () {
@@ -35,6 +38,7 @@ System.register(["../views/NegociacoesView", "../views/MensagemView", "../models
                     this._negociacoes = new Negociacoes_1.Negociacoes();
                     this._negociacoesView = new NegociacoesView_1.NegociacoesView('#negociacoesView', true);
                     this._mensagemView = new MensagemView_1.MensagemView('#mensagemView', true);
+                    this._service = new NegociacaoService_1.NegociacaoService();
                     this._negociacoesView.update(this._negociacoes);
                 }
                 adiciona(event) {
@@ -45,8 +49,9 @@ System.register(["../views/NegociacoesView", "../views/MensagemView", "../models
                         return;
                     }
                     const negociacao = new Negociacao_1.Negociacao(data, parseInt(this._inputQuantidade.val()), parseFloat(this._inputValor.val()));
-                    console.log(negociacao);
+                    negociacao.paraTexto();
                     this._negociacoes.adiciona(negociacao);
+                    this._negociacoes.paraTexto();
                     this._negociacoesView.update(this._negociacoes);
                     this._mensagemView.update('Negociação adicionada com sucesso!');
                 }
@@ -60,15 +65,12 @@ System.register(["../views/NegociacoesView", "../views/MensagemView", "../models
                             throw new Error(res.statusText);
                         }
                     }
-                    fetch('http://localhost:8080/dados').then(res => isOK(res))
-                        .then(res => res.json())
-                        .then((dados) => {
-                        dados
-                            .map(dado => new Negociacao_1.Negociacao(new Date(), dado.vezes, dado.montante))
-                            .forEach(negociacao => this._negociacoes.adiciona(negociacao));
+                    this
+                        ._service.obterNegociacoes((isOK))
+                        .then(negociacoes => {
+                        negociacoes.forEach(negociacao => this._negociacoes.adiciona(negociacao));
                         this._negociacoesView.update(this._negociacoes);
-                    })
-                        .catch(err => console.log(err.message));
+                    });
                 }
             };
             __decorate([

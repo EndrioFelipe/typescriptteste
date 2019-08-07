@@ -19,6 +19,10 @@ export class Negociacoes {
 
     }
 
+    paraTexto(): void {
 
+        console.log('-- paraTexto --');
+        console.log(JSON.stringify(this._negociacoes)); //JSON.stringfy serve para transformar objetos JavaScript para string
+    }
 
 }
