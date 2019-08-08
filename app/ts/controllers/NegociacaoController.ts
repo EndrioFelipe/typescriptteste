@@ -65,26 +65,72 @@ export class NegociacaoController {
         
     }
 
-    @throttle()
-    importaDados(){     
+    // @throttle()
+    // importaDados(){     
         
-        function isOK(res: Response){
-            if(res.ok){ //esse ok é um método do tipo response
-                console.log("sdf");
-                return res;
-            } else {
-                throw new Error(res.statusText); //esse statusText é um método do tipo response / devolve o status code
-            }
+    //     function isOK(res: Response){
+    //         if(res.ok){ //esse ok é um método do tipo response
+    //             console.log("sdf");
+    //             return res;
+    //         } else {
+    //             throw new Error(res.statusText); //esse statusText é um método do tipo response / devolve o status code
+    //         }
+    //     }
+
+    //     this
+    //         ._service.obterNegociacoes((isOK))
+    //         .then(negociacoesParaImportar => {
+
+    //             const negociacoesJaImportadas = this._negociacoes.paraArray();
+
+    //             negociacoesParaImportar
+    //                 .filter(negociacao => 
+    //                     !negociacoesJaImportadas.some(jaImportada => 
+    //                         negociacao.ehIgual(jaImportada)))
+    //                 .forEach(negociacao => 
+    //                 this._negociacoes.adiciona(negociacao));
+
+    //             this._negociacoesView.update(this._negociacoes);
+    //         }).catch(err => {
+    //                 this._mensagemView.update(err.message);
+    //             })
+
+
+
+    ///*************************Sem uso de Promise usando async e await */
+    @throttle()
+    async importaDados() {  //apesar desse método parecer síncrono, ele é assíncrono. isso por que ele manda importaDados() esperar a execução do isOk() para dar continuidade ao fluxo do código. Com isso é possível também usar o try-catch.
+
+        try {
+            function isOK(res: Response){
+                        if(res.ok){ //esse ok é um método do tipo response
+                            console.log("sdf");
+                            return res;
+                        } else {
+                            throw new Error(res.statusText); //esse statusText é um método do tipo response / devolve o status code
+                        }
+                    }
+
+           // usou await antes da chamada de this.service.obterNegociacoes()
+
+            const negociacoesParaImportar = await this._service //aqui diz para o método importaDados() esperar a execução do método isOk()
+                .obterNegociacoes(isOK);
+
+            const negociacoesJaImportadas = this._negociacoes.paraArray();
+
+            negociacoesParaImportar
+                .filter(negociacao => 
+                    !negociacoesJaImportadas.some(jaImportada => 
+                        negociacao.ehIgual(jaImportada)))
+                .forEach(negociacao => 
+                this._negociacoes.adiciona(negociacao));
+
+            this._negociacoesView.update(this._negociacoes);
+
+        } catch(err) {
+            this._mensagemView.update(err.message);
         }
-
-        this
-            ._service.obterNegociacoes((isOK))
-            .then(negociacoes => {
-                negociacoes.forEach(negociacao =>  
-                    this._negociacoes.adiciona(negociacao));
-                this._negociacoesView.update(this._negociacoes);
-            });
-
+    
         
 
         //------->>>>Ops! Esse 'fetch' abaixo foi transportado para NegociacaoService, pq caso a gente queira fazer a mesma coisa em outros métodos, ficará mais fácil se passarmos esse 'fetch' para 'NegociacaoService'.

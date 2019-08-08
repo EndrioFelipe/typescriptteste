@@ -14,7 +14,10 @@ export class NegociacaoService{
                 // .forEach(negociacao => this._negociacoes.adiciona(negociacao));
                 // this._negociacoesView.update(this._negociacoes);
             )
-        .catch(err => console.log(err.message));
+        .catch(err =>  {
+            console.log(err.message);
+            throw new Error ('Num rolo importa as negociassão, cara.');
+        });
         //Através da chamada da função then temos acesso à resposta que precisa ser convertida (parse) adequadamente e a Fetch API já traz na própria resposta o método .json() 
         //.json() realiza essa conversão de JSON para objetos em JavaScript. 
         //Como usamos arrow function sem bloco, o resultado da instrução res.json() é retornado automaticamente sem a necessidade de usarmos um return e quando fazemos isso, temos acesso ao retorno na próxima chamada encadeada à função then.

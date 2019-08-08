@@ -16,7 +16,10 @@ System.register(["../models/Negociacao"], function (exports_1, context_1) {
                         .then(res => res.json())
                         .then((dados) => dados
                         .map(dado => new Negociacao_1.Negociacao(new Date(), dado.vezes, dado.montante)))
-                        .catch(err => console.log(err.message));
+                        .catch(err => {
+                        console.log(err.message);
+                        throw new Error('Num rolo importa as negociassão, cara.');
+                    });
                 }
             };
             exports_1("NegociacaoService", NegociacaoService);

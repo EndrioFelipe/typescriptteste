@@ -1,4 +1,7 @@
-export class Negociacao {
+import {Imprimivel} from "./Imprimivel";
+import {Igualavel} from "./Igualavel";
+
+export class Negociacao implements Imprimivel, Igualavel<Negociacao>{
     // private _data: Date;
     // private _quantidade: number;
     // private _valor: number; //é preciso especificar em tsconfig pra ignorar o tipo any q é atribuido 
@@ -6,6 +9,8 @@ export class Negociacao {
     
     constructor(readonly data: Date, readonly quantidade: number,  readonly valor: number) {
         //não precisa mais fazer o shadowing
+        //super(); //como o número de parâmetros do construtor da classe filha é maior que o da classe pai, dá erro de compilação, então somos obrigados a chamar super(). Isso se Imprimivel continuasse sendo uma classe, mas agora é uma interface, então não faz mais diferença.
+        
     }
 
     //*****Quando você muda o encapsulamento de private para readonly, logo eles se tornam apenas leitura 
@@ -44,5 +49,12 @@ export class Negociacao {
             Valor: ${this.valor}, 
             Volume: ${this.volume}`
         );
+    }
+
+    ehIgual(negociacao: Negociacao): boolean {
+
+        return this.data.getDate() == negociacao.data.getDate()
+            && this.data.getMonth() == negociacao.data.getMonth()
+            && this.data.getFullYear() == negociacao.data.getFullYear();
     }
 }
