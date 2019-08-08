@@ -6,6 +6,7 @@ import { NegociacaoParcial } from '../models/NegociacaoParcial';
 import { domInject } from '../helpers/decorators/domInject'
 import { throttle } from '../helpers/decorators/throttle'
 import { NegociacaoService } from '../services/NegociacaoService'
+import { imprime } from '../helpers/Utils'
 
 //procure na aula 01 vídeo 07 caso queira deixar esses imports mais enxutos
 
@@ -48,11 +49,8 @@ export class NegociacaoController {
         const negociacao = new Negociacao(data, //aqui o input recebe no formato String e Date até aceita o formato String, mas ela recebe tipo 2012-05-01 e ela deveria ser 2012,05,01. Então o replace troca os hífens por vírgulas
                                           parseInt(this._inputQuantidade.val()),
                                           parseFloat(this._inputValor.val()));
-        negociacao.paraTexto();
 
         this._negociacoes.adiciona(negociacao);
-
-        this._negociacoes.paraTexto();
 
         this._negociacoesView.update(this._negociacoes);//passa a lisa de negociacoes
 
@@ -62,6 +60,8 @@ export class NegociacaoController {
         // });
 
         this._mensagemView.update('Negociação adicionada com sucesso!');
+
+        imprime(negociacao, this._negociacoes);
         
     }
 

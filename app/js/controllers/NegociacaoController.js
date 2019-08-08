@@ -1,4 +1,4 @@
-System.register(["../views/NegociacoesView", "../views/MensagemView", "../models/Negociacoes", "../models/Negociacao", "../helpers/decorators/domInject", "../helpers/decorators/throttle", "../services/NegociacaoService"], function (exports_1, context_1) {
+System.register(["../views/NegociacoesView", "../views/MensagemView", "../models/Negociacoes", "../models/Negociacao", "../helpers/decorators/domInject", "../helpers/decorators/throttle", "../services/NegociacaoService", "../helpers/Utils"], function (exports_1, context_1) {
     "use strict";
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
         var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -7,7 +7,7 @@ System.register(["../views/NegociacoesView", "../views/MensagemView", "../models
         return c > 3 && r && Object.defineProperty(target, key, r), r;
     };
     var __moduleName = context_1 && context_1.id;
-    var NegociacoesView_1, MensagemView_1, Negociacoes_1, Negociacao_1, domInject_1, throttle_1, NegociacaoService_1, NegociacaoController, DiaDaSemana;
+    var NegociacoesView_1, MensagemView_1, Negociacoes_1, Negociacao_1, domInject_1, throttle_1, NegociacaoService_1, Utils_1, NegociacaoController, DiaDaSemana;
     return {
         setters: [
             function (NegociacoesView_1_1) {
@@ -30,6 +30,9 @@ System.register(["../views/NegociacoesView", "../views/MensagemView", "../models
             },
             function (NegociacaoService_1_1) {
                 NegociacaoService_1 = NegociacaoService_1_1;
+            },
+            function (Utils_1_1) {
+                Utils_1 = Utils_1_1;
             }
         ],
         execute: function () {
@@ -49,11 +52,10 @@ System.register(["../views/NegociacoesView", "../views/MensagemView", "../models
                         return;
                     }
                     const negociacao = new Negociacao_1.Negociacao(data, parseInt(this._inputQuantidade.val()), parseFloat(this._inputValor.val()));
-                    negociacao.paraTexto();
                     this._negociacoes.adiciona(negociacao);
-                    this._negociacoes.paraTexto();
                     this._negociacoesView.update(this._negociacoes);
                     this._mensagemView.update('Negociação adicionada com sucesso!');
+                    Utils_1.imprime(negociacao, this._negociacoes);
                 }
                 importaDados() {
                     function isOK(res) {
